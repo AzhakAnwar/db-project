@@ -1,0 +1,28 @@
+from django.db import models
+
+
+class StudentTests(models.Model):
+    test_id = models.AutoField(verbose_name='Test ID', primary_key=True)
+    date = models.DateField(verbose_name='Test Date', auto_now_add=True)
+    total_marks = models.IntegerField(verbose_name='Max Marks', default=100)
+    subject = models.CharField(max_length=20)
+
+    def __str__(self):
+        return 'Test # ' + str(self.test_id)
+
+
+class Conduct(models.Model):
+    obtained_marks = models.IntegerField()
+    student_id = models.ForeignKey(
+        to='users.Student', verbose_name='Student ID', db_column='ssn', on_delete=models.CASCADE)
+    teacher_id = models.ForeignKey(
+        to='users.Teacher', verbose_name='Teacher ID', db_column='ssn', on_delete=models.CASCADE)
+    test_id = models.ForeignKey(
+        to=StudentTests, verbose_name='Test ID', db_column='test_id', on_delete=models.CASCADE)
+    remarks = models.TextField(verbose_name='Remarks', null=True, blank=True)
+
+    class Meta:
+        unique_together = (('test_id', 'student_id'),)
+
+    def __str__(self):
+        return f'{self.test_id} of {self.student_id} marked by Sir {self.teacher_id}'
