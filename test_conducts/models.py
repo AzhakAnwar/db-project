@@ -14,11 +14,11 @@ class StudentTests(models.Model):
 class Conduct(models.Model):
     obtained_marks = models.IntegerField()
     student_id = models.ForeignKey(
-        to='users.Student', verbose_name='Student ID', db_column='ssn', on_delete=models.CASCADE)
+        to='users.Student', verbose_name='Student ID', to_field='ssn', on_delete=models.CASCADE)
     teacher_id = models.ForeignKey(
-        to='users.Teacher', verbose_name='Teacher ID', db_column='ssn', on_delete=models.CASCADE)
+        to='users.Teacher', verbose_name='Teacher ID', to_field='ssn', on_delete=models.CASCADE)
     test_id = models.ForeignKey(
-        to=StudentTests, verbose_name='Test ID', db_column='test_id', on_delete=models.CASCADE)
+        to=StudentTests, verbose_name='Test ID', to_field='test_id', on_delete=models.CASCADE)
     remarks = models.TextField(verbose_name='Remarks', null=True, blank=True)
 
     class Meta:

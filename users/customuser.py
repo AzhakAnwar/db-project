@@ -10,4 +10,4 @@ class CustomUser(AbstractUser):
         (3, 'teacher')
     )
     user_type = models.PositiveSmallIntegerField(
-        verbose_name='Profession', choices=USER_TYPE_CHOICES, default=1)
+        verbose_name='Profession', choices=USER_TYPE_CHOICES, blank=True, null=True)
