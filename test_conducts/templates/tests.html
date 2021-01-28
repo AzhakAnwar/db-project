@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ul>
+{% for test in tests %}
+<li>{{test.obtained_marks}}</li>
+<li>{{test.student_id}}</li>
+<li>{{test.teacher_id}}</li>
+<li>{{test.test_id}}</li>
+<li>{{test.remarks}}</li>
+<br>
+
+{% endfor %}
+</ul>
+
+{% endblock %}
