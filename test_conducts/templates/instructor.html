@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+Instructor
+<br>
+{{teacher_id}}
+<br>
+{{teacher_id.phone}}
+<br>
+{{teacher_id.ssn}}
+<br>
+{{teacher_id.name}}
+
+{% for i in teacher_id%}
+{{i.phone}}
+{{i.name}}
+
+{%endfor%}
+{% endblock %}
