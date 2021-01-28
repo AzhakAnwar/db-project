@@ -12,54 +12,64 @@ def home(request):
 
 def studentsignup(request):
     if request.method == 'GET':
-        return render(request, 'signupuser.html', {'form': StudentForm()})
-    else:
-        print("It's Student Sign up method")
-        return request
+        return render(request, 'studentsignup.html', {'form': StudentForm()})
+
+
+def parentsignup(request):
+    return render(request, 'parentsignup.html', {'form': ParentForm()})
+
+
+def loginform(request, form_type):
+    if request.method == 'GET':
+        if form_type == 'student':
+            return render(request, 'studentsignup.html', {'form': StudentForm()})
+        elif form_type == 'parent':
+            return render(request, 'studentsignup.html', {'form': ParentForm()})
 
 
 def signupuser(request):
     if request.method == 'GET':
-        print(request.user)
-        return render(request, 'signupuser.html', {'form': StudentForm()})
+        return render(request, 'signupuser.html', {'studentform': StudentForm(), 'parentform': ParentForm()})
     else:
         if request.POST['password1'] == request.POST['password2']:
             try:
                 user = CustomUser.objects.create_user(
-                    username=request.POST['username'], 
+                    username=request.POST['username'],
                     password=request.POST['password1'],
                     first_name=request.POST['first_name'],
                     last_name=request.POST['last_name'])
-                user.save()
-                login(request, user)
-                # identity = request.POST['identity']
-                if (request.POST['user_type'] == '1'):   # student
-                    return redirect('studentsignup')
-                    new_request = 1
-                    print(new_request)
-                    input()
-                    student_detail = new_request
-                    parent = user
-                    Student.objects.create(
-                        name=student_detail['name'],
-                        parent_id=parent,
-                        ssn=user,
-                        standard=int(student_detail['']),
-                        phone=student_detail['phone']
-                    )
-                else:  # teacher
 
-                    Parent.objects.create(
-                        name=request.POST['name'],
-                        ssn=user,
-                        phone=request.POST['phone']
-                    )
-                print('User signed up')
+                person = ParentForm(request.POST)
+                if person.is_valid():
+                    add_person = person.save(commit=False)
+                    add_person.name = user.get_full_name().title()
+                    add_person.ssn = user
+                    add_person.save()
+                    user.user_type = 2  # parent
+                    user.save()
+                else:
+                    person = StudentForm(request.POST)
+                    if person.is_valid():
+                        add_person = person.save(commit=False)
+                        add_person.name = user.get_full_name().title()
+                        add_person.ssn = user
+                        add_person.save()
+                        user.user_type = 1  # student
+                        user.save()
+                    else:
+                        return render(request, 'signupuser.html',
+                                      {'studentform': StudentForm(),
+                                       'parentform': ParentForm(),
+                                       'error': 'Invalid Form submission. Try Again.'})
                 return redirect('signupuser')
             except IntegrityError:
-                return render(request, 'signupuser.html', {'form': CustomUserCreationForm(), 'error': 'That username has aleady been taken. Please choose a new username.'})
+                return render(request, 'signupuser.html',
+                              {'form': CustomUserCreationForm(),
+                               'error': 'That username has aleady been taken. Please choose a new username.'})
         else:
-            return render(request, 'signupuser.html', {'form': CustomUserCreationForm(), 'error': 'Passwords did not match'})
+            return render(request, 'signupuser.html',
+                          {'form': CustomUserCreationForm(),
+                           'error': 'Passwords did not match'})
 
 
 def logoutuser(request):

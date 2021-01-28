@@ -3,6 +3,7 @@ from .customuser import CustomUser
 from django.forms import ModelForm
 from .models import Parent, Student, Teacher
 from django.contrib.auth.forms import UserCreationForm
+from django.utils.translation import ugettext_lazy as _
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -14,9 +15,11 @@ class CustomUserCreationForm(UserCreationForm):
 class StudentForm(ModelForm):
     class Meta:
         model = Student
-        fields = ('name', 'parent_id', 'phone', 'standard')
+        fields = ('parent_id', 'phone', 'standard')
+        help_texts = {'parent_id': _(
+            "Can't find your Guardia ID. Please register your parent/guardian's account first."), }
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            # 'name': forms.TextInput(attrs={'class': 'form-control'}),
             'parent_id': forms.Select(attrs={'class': 'form-control'}),
             'phone': forms.TextInput(attrs={'class': 'form-control'}),
             'standard': forms.NumberInput(attrs={'class': 'form-control'}),
@@ -26,9 +29,9 @@ class StudentForm(ModelForm):
 class ParentForm(ModelForm):
     class Meta:
         model = Parent
-        fields = ('name', 'phone')
+        fields = ('phone',)
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            # 'name': forms.TextInput(attrs={'class': 'form-control'}),
             'phone': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
@@ -36,8 +39,8 @@ class ParentForm(ModelForm):
 class TeacherForm(ModelForm):
     class Meta:
         model = Teacher
-        fields = ('name', 'phone')
+        fields = ('phone',)
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            # 'name': forms.TextInput(attrs={'class': 'form-control'}),
             'phone': forms.TextInput(attrs={'class': 'form-control'}),
         }
