@@ -16,8 +16,8 @@ class StudentForm(ModelForm):
     class Meta:
         model = Student
         fields = ('parent_id', 'phone', 'standard')
-        help_texts = {'parent_id': _(
-            "Can't find your Guardia ID. Please register your parent/guardian's account first."), }
+        help_texts = {'parent_id': _("Can't find your Guardia ID. Please register your parent/guardian's account first."),
+                      'phone': _('Phone no is not compulsory for student.')}
         widgets = {
             # 'name': forms.TextInput(attrs={'class': 'form-control'}),
             'parent_id': forms.Select(attrs={'class': 'form-control'}),

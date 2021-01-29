@@ -21,7 +21,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('signup/', views.signupuser, name='signupuser'),
+    path('t_signup/', views.teachersignup, name='teachersignup'),
     path('login/', views.loginuser, name='loginuser'),
     path('logout/', views.logoutuser, name='logoutuser'),
+    path('t_approve/', views.approve_teacher, name='approve_teacher'),
     path('tests/', include('test_conducts.urls')),
 ]
