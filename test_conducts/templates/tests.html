@@ -11,6 +11,7 @@
             <th scope="col">Obtained Marks</th>
             <th scope="col">Total Marks</th>
             <th scope="col">Remarks</th>
+            <th scope="col">Test Date</th>
         </tr>
     </thead>
     <tbody>
@@ -19,22 +20,30 @@
             <td>
                 <form method="POST">
                     {% csrf_token %}
-                    <input type="hidden" name="test_detail" value="{{test.test_id}}">
+                    <input type="hidden" name="test_detail" value="{{test.test_id_id}}">
                     <button class="btn btn-link">{{test.test_id}}</button>
                 </form>
 
             </td>
-            <td>{{test.student_id}}</td>
             <td>
                 <form method="POST">
                     {% csrf_token %}
-                    <input type="hidden" name="instructor" value="{{test.teacher_id}}">
+                    <input type="hidden" name="student" value="{{test.student_id_id}}">
+                    <button class="btn btn-link">{{test.student_id}}</button>
+                </form>
+                {#<a href="{% url  %}"></a>#}
+            </td>
+            <td>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="instructor" value="{{test.teacher_id_id}}">
                     <button class="btn btn-link">{{test.teacher_id}}</button>
                 </form>
             </td>
             <td>{{test.obtained_marks}}</td>
-            <td>100</td>
+            <td>{{test.test_id.total_marks}} </td>
             <td>{{test.remarks}}</td>
+            <td>{{test.test_id.date}}</td>
         </tr>
         {% endfor %}
     </tbody>

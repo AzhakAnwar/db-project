@@ -96,6 +96,10 @@ def approve_teacher(request):
             un_auth_users = CustomUser.objects.filter(user_type=None)
             teachers = Teacher.objects.filter(
                 ssn__in=un_auth_users.values_list('id', flat=True))
+            if teachers:
+                print(type(teachers), teachers)
+            else:
+                print('None')
             return render(request, 'approve_teacher.html', {'teachers': teachers})
         else:  # post
             approve = request.POST.get('approve')
@@ -109,17 +113,19 @@ def approve_teacher(request):
             elif delete:
                 teacher = CustomUser.objects.get(username=delete)
                 teacher.delete()
-            # elif approve_all:
-            #     un_auth_users = CustomUser.objects.filter(user_type=None)
-            #     teachers = Teacher.objects.filter(ssn__in=un_auth_users.values_list('id', flat=True))
-            #     for teacher in teachers:
-            #         teacher.user_type = 3   # Teacher
-            #         teacher.save()
-            # elif delete_all:
-            #     un_auth_users = CustomUser.objects.filter(user_type=None)
-            #     teachers = Teacher.objects.filter(ssn__in=un_auth_users.values_list('id', flat=True))
-            #     for teacher in teachers:
-            #         teacher.delete()
+            elif approve_all:
+                all_teachers = Teacher.objects.values_list('ssn', flat=True)
+                un_auth_teachers = CustomUser.objects.filter(
+                    user_type=None, id__in=all_teachers)
+                for teacher in un_auth_teachers:
+                    teacher.user_type = 3   # Teacher
+                    teacher.save()
+            elif delete_all:
+                all_teachers = Teacher.objects.values_list('ssn', flat=True)
+                un_auth_teachers = CustomUser.objects.filter(
+                    user_type=None, id__in=all_teachers)
+                for teacher in un_auth_teachers:
+                    teacher.delete()
             return redirect('approve_teacher')
     else:
         return HttpResponseForbidden("Response Forbidden")
