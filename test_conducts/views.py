@@ -38,10 +38,10 @@ def s_tests(request, s_id):
     tests = None
     all_results = Conduct.objects.filter(student_id=s_id)
     try:
-        records = get_list_or_404(Conduct, student_id=request.user.id)
+        records = get_list_or_404(Conduct, Q(student_id=request.user.id)|Q(student_id__parent_id=request.user.id))
     except:
         try:
-            records = get_list_or_404(Conduct, student_id__parent_id=request.user.id)
+            records = get_list_or_404(Conduct, Q(student_id__parent_id=request.user.id))
             print("Father")
         except: pass
     # .filter(student_id__parent_id=request.user.id)
