@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import CustomUserCreationForm, ParentForm, StudentForm
 from .models import Parent, Teacher, Student
 from .customuser import CustomUser
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -54,7 +55,7 @@ def signupuser(request):
                           {'form': CustomUserCreationForm(),
                            'error': 'Passwords did not match'})
 
-
+@login_required
 def logoutuser(request):
     logout(request)
     return redirect('home')

@@ -1,8 +1,10 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import Conduct, StudentTests
 from users.models import Student, Teacher
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def tests(request):
     tests = None
     if request.method == 'GET':
@@ -30,9 +32,3 @@ def tests(request):
                 return render(request, 'tests.html', {'test': test})
             except IndexError:
                 return redirect('tests')
-        return redirect('tests')
-
-
-def instructor(request):
-    teacher_id = '5'
-    return render(request, 'instructor.html', {'teacher_id': teacher_id})
