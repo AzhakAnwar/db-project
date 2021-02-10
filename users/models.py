@@ -25,7 +25,7 @@ class Teacher(models.Model):
 class Student(models.Model):
     name = models.CharField(verbose_name='Full Name', max_length=30)
     parent_id = models.ForeignKey(to=Parent, verbose_name='Parent/Guardian',
-                                  on_delete=models.CASCADE, to_field='ssn', null=True)
+                                  on_delete=models.CASCADE, to_field='ssn', null=True)  # to make field empty in the beginning
     ssn = models.OneToOneField(to=CustomUser, on_delete=models.CASCADE,
                                primary_key=True, verbose_name='Student ID', to_field='id')
     standard = models.IntegerField(verbose_name='Class', blank=True)

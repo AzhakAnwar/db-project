@@ -16,6 +16,7 @@ def signupuser(request):
     if request.method == 'GET':
         return render(request, 'signupuser.html', {'studentform': StudentForm(), 'parentform': ParentForm()})
     else:
+        print(request.POST)
         if request.POST['password1'] == request.POST['password2']:
             try:
                 user = CustomUser.objects.create_user(
@@ -45,16 +46,18 @@ def signupuser(request):
                         return render(request, 'signupuser.html',
                                       {'studentform': StudentForm(),
                                        'parentform': ParentForm(),
-                                       'error': 'Invalid Form submission. Try Again.'})
+                                       'error': 'Invalid form submission. Try Again.'})
 
                 return redirect('signupuser')
             except IntegrityError:
                 return render(request, 'signupuser.html',
-                              {'form': CustomUserCreationForm(),
+                              {'studentform': StudentForm(),
+                               'parentform': ParentForm(),
                                'error': 'That username has aleady been taken. Please choose a new username.'})
         else:
             return render(request, 'signupuser.html',
-                          {'form': CustomUserCreationForm(),
+                          {'studentform': StudentForm(),
+                           'parentform': ParentForm(),
                            'error': 'Passwords did not match'})
 
 
@@ -94,12 +97,13 @@ def approve_teacher(request):
     if request.user.is_superuser:       # only a superuser can approve or delete
         if request.method == 'GET':
             un_auth_users = CustomUser.objects.filter(user_type=None)
+            # print(un_auth_users.query)
             teachers = Teacher.objects.filter(
                 ssn__in=un_auth_users.values_list('id', flat=True))
-            if teachers:
-                print(type(teachers), teachers)
-            else:
-                print('None')
+            # if teachers:
+                # print(type(teachers), teachers)
+            # else:
+                # print('None')
             return render(request, 'approve_teacher.html', {'teachers': teachers})
         else:  # post
             approve = request.POST.get('approve')
