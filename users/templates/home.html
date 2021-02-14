@@ -2,13 +2,19 @@
 {% load static %}
 {% block content %}
 <br>
-<div class="row justify-content-center mt-5">
+<div class="row justify-content-center">
     <div class="col-md-7 text-center">
-        <h1>Hello {{user.get_full_name}} </h1>
+        <h1>Hello 
+            {% if user.is_authenticated %}
+            {{user.get_full_name}} 
+            {% else %}
+            There
+            {% endif %}
+        </h1>
     </div>
 </div>
 <br>
-<div class="row justify-content-center mt-5">
+<div class="row justify-content-center">
     <div class="col-md-7 text-center">
         <h1>Welcome to Teacher Parent Interactive LMS</h1>
         <p>
