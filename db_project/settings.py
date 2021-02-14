@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '%+380y$3-4u8mnni*72s9xvupuio0j32cx+k4=$afgl=8@p&w-sdhvbdsdkjgsid0967ryhb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['lms.pythonanywhere.com']
 
 
 # Application definition
@@ -121,7 +121,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 try:
     from .local_settings import *
 except ImportError:
-    print("Not file named local_settings.py")
+    pass

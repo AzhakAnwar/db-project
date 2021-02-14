@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
 <br>
 <div class="row justify-content-center mt-5">
@@ -10,13 +10,21 @@
 <br>
 <div class="row justify-content-center mt-5">
     <div class="col-md-7 text-center">
-        <h1>Welcome to Our Teacher Parent Interactive LMS</h1>
-        <p>Des
-            <b>c
-                <i>
-                    ri
-                </i>
-            </b> ption
+        <h1>Welcome to Teacher Parent Interactive LMS</h1>
+        <p>
+            Robust relation of a teacher with his pupil's parents is a great starting point for
+            handling problems that come up at school. In this busy world, it is quite hard for
+            parents to contact their child’s teacher and taking the current situation of a
+            pandemic due to <b>covid-19</b> into account, it has become more difficult for parents to
+            visit the school physically.
+        </p>
+        <p>
+            So we provide an <i>online result portal</i> which comes in handy and easily accessible
+            by parents and teachers so they can communicate comfortably and discuss the progress of students.
+            This system will not only allow easy communication between parents and teachers but also
+            updates parents with their children’s performance which will motivate children to perform
+            well in school. Parents can see their children’s result at any place without having to
+            worry about their busy schedule.
         </p>
         {% if user.is_authenticated %}
         <a role="button" class="btn btn-primary btn-lg" href="{% url 'tests' %}">View Results</a>
@@ -37,5 +45,7 @@
         {% endif %}
     </div>
 </div>
+<div class="mt-5">
 
+</div>
 {% endblock %}
