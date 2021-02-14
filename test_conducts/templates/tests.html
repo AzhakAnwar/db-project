@@ -7,9 +7,11 @@
         <tr>
             <th scope="col">Test ID</th>
             <th scope="col">Student Name</th>
+            <th scope="col">Class</th>
             <th scope="col">Marked by</th>
             <th scope="col">Obtained Marks</th>
             <th scope="col">Total Marks</th>
+            <th scope="col">Percentage</th>
             <th scope="col">Remarks</th>
             <th scope="col">Test Date</th>
         </tr>
@@ -26,22 +28,26 @@
 
             </td>
             <td>
+                {% comment %}
                 <form method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="student" value="{{test.student_id_id}}">
                     <button class="btn btn-link">{{test.student_id}}</button>
                 </form>
-                {#<a href="{% url  %}"></a>#}
+                {% endcomment %}
+                <a href="{% url 's_tests' test.student_id_id %}">{{test.student_id}}</a>
             </td>
+            <td>{{test.test_id.standard}}</td>
             <td>
                 <form method="POST">
                     {% csrf_token %}
-                    <input type="hidden" name="instructor" value="{{test.teacher_id_id}}">
-                    <button class="btn btn-link">{{test.teacher_id}}</button>
+                    <input type="hidden" name="instructor" value="{{test.test_id.teacher_id_id}}">
+                    <button class="btn btn-link">{{test.test_id.teacher_id}}</button>
                 </form>
             </td>
             <td>{{test.obtained_marks}}</td>
             <td>{{test.test_id.total_marks}} </td>
+            <td>{{test.percentage|floatformat:"2"}}</td>
             <td>{{test.remarks}}</td>
             <td>{{test.test_id.date}}</td>
         </tr>

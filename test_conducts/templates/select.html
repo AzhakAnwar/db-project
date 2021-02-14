@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Test ID</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Class</th>
+            <th scope="col">Total Marks</th>
+            <th scope="col">Test Date</th>
+            <th scope="col">Select</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for test in tests %}
+        <tr>
+            <td>{{test.test_id}}</td>
+            <td>{{test.subject}}</td>
+            <td>{{test.standard}}</td>
+            <td>{{test.total_marks}}</td>
+            <td>{{test.date}}</td>
+            <td>
+                <a class="btn btn-primary" href="{% url 'conduct' test.test_id %}">
+                    Select
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<hr>
+<div class="text-center">
+    Please <a href="{% url 'add_test' %}"><i>click here</i></a> to register a test if it is not listed above.
+</div>
+
+{% endblock %}

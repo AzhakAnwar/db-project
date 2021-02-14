@@ -28,7 +28,7 @@ class Student(models.Model):
                                   on_delete=models.CASCADE, to_field='ssn', null=True)  # to make field empty in the beginning
     ssn = models.OneToOneField(to=CustomUser, on_delete=models.CASCADE,
                                primary_key=True, verbose_name='Student ID', to_field='id')
-    standard = models.IntegerField(verbose_name='Class', blank=True)
+    standard = models.IntegerField(verbose_name='Class')
     phone = models.CharField(
         max_length=12, verbose_name='Phone No.', blank=True)
 

@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
-from .forms import CustomUserCreationForm, ParentForm, StudentForm, TeacherForm
-from .models import Parent, Teacher, Student
+from .forms import ParentForm, StudentForm, TeacherForm
+from .models import Teacher
 from .customuser import CustomUser
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden, HttpResponseNotFound
+from django.http import HttpResponseForbidden
 
 
 def home(request):
@@ -47,8 +47,8 @@ def signupuser(request):
                                       {'studentform': StudentForm(),
                                        'parentform': ParentForm(),
                                        'error': 'Invalid form submission. Try Again.'})
-
-                return redirect('signupuser')
+                login(request, user)
+                return redirect('home')
             except IntegrityError:
                 return render(request, 'signupuser.html',
                               {'studentform': StudentForm(),
@@ -89,7 +89,8 @@ def teachersignup(request):
             return render(request, 'teachersignup.html',
                           {'form': TeacherForm(),
                            'error': 'Passwords did not match'})
-    return redirect('teachersignup')
+    login(request, user)
+    return redirect('home')
 
 
 @login_required
@@ -101,9 +102,9 @@ def approve_teacher(request):
             teachers = Teacher.objects.filter(
                 ssn__in=un_auth_users.values_list('id', flat=True))
             # if teachers:
-                # print(type(teachers), teachers)
+            # print(type(teachers), teachers)
             # else:
-                # print('None')
+            # print('None')
             return render(request, 'approve_teacher.html', {'teachers': teachers})
         else:  # post
             approve = request.POST.get('approve')
