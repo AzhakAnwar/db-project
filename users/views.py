@@ -101,10 +101,6 @@ def approve_teacher(request):
             # print(un_auth_users.query)
             teachers = Teacher.objects.filter(
                 ssn__in=un_auth_users.values_list('id', flat=True))
-            # if teachers:
-            # print(type(teachers), teachers)
-            # else:
-            # print('None')
             return render(request, 'approve_teacher.html', {'teachers': teachers})
         else:  # post
             approve = request.POST.get('approve')

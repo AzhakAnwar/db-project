@@ -1,4 +1,3 @@
-from django.db.models.aggregates import Avg, Sum
 from test_conducts.forms import TestForm
 from django.shortcuts import get_list_or_404, redirect, render
 from .models import Conduct, StudentTests
@@ -19,13 +18,10 @@ def tests(request):
         elif request.user.user_type == 2:     # parent
             tests = Conduct.objects.select_related('test_id', 'student_id').filter(
                 student_id__parent_id=request.user.id)
-            # children = Student.objects.filter(parent_id=request.user.id)
-            # tests = Conduct.objects.filter(
-            # student_id__in=children.values_list('ssn', flat=True))
         elif request.user.user_type == 3:   # Teacher
             all_tests = Conduct.objects.select_related('test_id').all()
             tests = all_tests.filter(test_id__teacher_id_id=request.user.id)
-        return render(request, 'tests.html', {'tests': tests})
+        return render(request, 'tests.html', {'tests': tests.order_by('test_id')})
     else:
         instructor = request.POST.get('instructor')
         test = request.POST.get('test_detail')
@@ -41,10 +37,16 @@ def tests(request):
 
 @login_required
 def s_tests(request, s_id):
-    # qr = Conduct.objects.filter(Q(student_id=request.user.id) | Q(student_id__parent_id=request.user.id))
-    # print(qr.query)       # this query uses inner join
-    records = get_list_or_404(Conduct.objects.select_related('test_id'), Q(
-        student_id=request.user.id) | Q(student_id__parent_id=request.user.id), student_id=s_id)
+    all_records = Conduct.objects.select_related('test_id').order_by('test_id')
+    if request.user.user_type == 3:
+        records = get_list_or_404(all_records, Q(
+            test_id__teacher_id=request.user.id), student_id=s_id)
+    elif request.user.user_type == 2:
+        records = get_list_or_404(all_records, Q(
+            student_id__parent_id=request.user.id), student_id=s_id)
+    else:
+        records = get_list_or_404(all_records, Q(
+            student_id=request.user.id), student_id=s_id)
     total_percentage = 0.0
     for record in records:
         total_percentage += record.percentage
