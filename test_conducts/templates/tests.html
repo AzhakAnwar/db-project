@@ -2,24 +2,24 @@
 
 {% block content %}
 {% if tests %}
-<table class="table table-striped table-hover">
+<table class="table table-striped table-hover" >
     <thead>
         <tr>
-            <th scope="col">Test ID</th>
-            <th scope="col">Student Name</th>
-            <th scope="col">Class</th>
-            <th scope="col">Marked by</th>
-            <th scope="col">Obtained Marks</th>
-            <th scope="col">Total Marks</th>
-            <th scope="col">Percentage</th>
-            <th scope="col">Remarks</th>
-            <th scope="col">Test Date</th>
+            <th scope="col" style="text-align: center;">Test ID</th>
+            <th scope="col" style="text-align: center;">Student Name</th>
+            <th scope="col" style="text-align: center;">Class</th>
+            <th scope="col" style="text-align: center;">Marked by</th>
+            <th scope="col" style="text-align: center;">Obtained Marks</th>
+            <th scope="col" style="text-align: center;">Total Marks</th>
+            <th scope="col" style="text-align: center;">Percentage</th>
+            <th scope="col" style="text-align: center;">Remarks</th>
+            <th scope="col" style="text-align: center;">Test Date</th>
         </tr>
     </thead>
     <tbody>
         {% for test in tests %}
         <tr>
-            <td>
+            <td class="align-middle" style="text-align: center;">
                 <form method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="test_detail" value="{{test.test_id_id}}">
@@ -27,7 +27,7 @@
                 </form>
 
             </td>
-            <td>
+            <td class="align-middle" style="text-align: center;">
                 {% comment %}
                 <form method="POST">
                     {% csrf_token %}
@@ -37,19 +37,19 @@
                 {% endcomment %}
                 <a href="{% url 's_tests' test.student_id_id %}">{{test.student_id}}</a>
             </td>
-            <td>{{test.test_id.standard}}</td>
-            <td>
+            <td class="align-middle" style="text-align: center;">{{test.test_id.standard}}</td>
+            <td class="align-middle" style="text-align: center;">
                 <form method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="instructor" value="{{test.test_id.teacher_id_id}}">
                     <button class="btn btn-link">{{test.test_id.teacher_id}}</button>
                 </form>
             </td>
-            <td>{{test.obtained_marks}}</td>
-            <td>{{test.test_id.total_marks}} </td>
-            <td>{{test.percentage|floatformat:"2"}}</td>
-            <td>{{test.remarks}}</td>
-            <td>{{test.test_id.date}}</td>
+            <td class="align-middle" style="text-align: center;">{{test.obtained_marks}}</td>
+            <td class="align-middle" style="text-align: center;">{{test.test_id.total_marks}} </td>
+            <td class="align-middle" style="text-align: center;">{{test.percentage|floatformat:"2"}}</td>
+            <td class="align-middle" style="text-align: center;">{{test.remarks}}</td>
+            <td class="align-middle" style="text-align: center;">{{test.test_id.date}}</td>
         </tr>
         {% endfor %}
     </tbody>
@@ -58,15 +58,15 @@
 <table class="table table-striped table-hover">
     <thead>
         <tr>
-            <th scope="col">Instructor Name</th>
-            <th scope="col">Phone No.</th>
+            <th scope="col" style="text-align: center;">Instructor Name</th>
+            <th scope="col" style="text-align: center;">Phone No.</th>
         </tr>
     </thead>
     <tbody>
         {% for i in instructor %}
         <tr>
-            <td>{{i.name}}</td>
-            <td>{{i.phone}}</td>
+            <td class="align-middle" style="text-align: center;">{{i.name}}</td>
+            <td class="align-middle" style="text-align: center;">{{i.phone}}</td>
         </tr>
         {% endfor %}
     </tbody>
@@ -75,19 +75,19 @@
 <table class="table table-striped table-hover">
     <thead>
         <tr>
-            <th scope="col">Test ID</th>
-            <th scope="col">Subject</th>
-            <th scope="col">Total Marks</th>
-            <th scope="col">Date</th>
+            <th scope="col" style="text-align: center;">Test ID</th>
+            <th scope="col" style="text-align: center;">Subject</th>
+            <th scope="col" style="text-align: center;">Total Marks</th>
+            <th scope="col" style="text-align: center;">Date</th>
         </tr>
     </thead>
     <tbody>
         {% for i in test %}
         <tr>
-            <td>{{i.test_id}}</td>
-            <td>{{i.subject}}</td>
-            <td>{{i.total_marks}}</td>
-            <td>{{i.date|date:'M j Y'}}</td>
+            <td class="align-middle" style="text-align: center;">{{i.test_id}}</td>
+            <td class="align-middle" style="text-align: center;">{{i.subject}}</td>
+            <td class="align-middle" style="text-align: center;">{{i.total_marks}}</td>
+            <td class="align-middle" style="text-align: center;">{{i.date|date:'M j Y'}}</td>
         </tr>
         {% endfor %}
     </tbody>

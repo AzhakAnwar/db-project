@@ -1,3 +1,4 @@
+from django.db.models.aggregates import Avg, Sum
 from test_conducts.forms import TestForm
 from django.shortcuts import get_list_or_404, redirect, render
 from .models import Conduct, StudentTests
@@ -44,7 +45,17 @@ def s_tests(request, s_id):
     # print(qr.query)       # this query uses inner join
     records = get_list_or_404(Conduct.objects.select_related('test_id'), Q(
         student_id=request.user.id) | Q(student_id__parent_id=request.user.id), student_id=s_id)
-    return render(request, 'tests.html', {'tests': records})
+    total_percentage = 0.0
+    for record in records:
+        total_percentage += record.percentage
+    avg_percentage = total_percentage / len(records)
+    student = Student.objects.get(pk=s_id)
+    return render(request, 'reportcard.html',
+                  {
+                      'student': student,
+                      'avg_percent': avg_percentage,
+                      'tests': records
+                  })
 
 
 @login_required

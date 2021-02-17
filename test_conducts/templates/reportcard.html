@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<table class="table table-borderless table-sm" style="width:max-content; align-items: center;">
+    
+    
+    <tbody>
+        <tr>
+            <h3 style="color: brown; text-align:left; margin-top: .5cm;">{{student.name}}'s Details</h3>
+        </tr>
+        {% if student.phone %}
+        <tr>
+            <td><h6>Student's Phone No:</h6></td>
+            <td><h6>{{student.phone}}</h6></td>
+        </tr>
+        {% endif %}
+        <tr>
+            <td><h6>Parent / Guardian Name:</h6></td>
+            <td><h6>{{student.parent_id}}</h6></td>
+        </tr>
+        <tr>
+            <td><h6>Guardian's Phone No:</h6></td>
+            <td><h6>{{student.parent_id.phone}}</h6></td>
+        </tr>
+        <tr>
+            <td><h6>Class:</h6></td>
+            <td><h6>{{student.standard}}</h6></td>
+        </tr>
+        <tr>
+            <td><h6>Total Conducted Tests:</h6></td>
+            <td><h6>{{tests|length}}</h6></td>
+        </tr>
+        <tr>
+            <td><h6>Average Percentage:</h6></td>
+            <td><h6>{{avg_percent|floatformat:"2" }}%</h6></td>
+        </tr>
+    </tbody>
+</table>
+<table class="table table-striped table-hover table-bordered border-warning">
+    <caption style="color: brown; text-align:left; margin-top: 0cm; caption-side: top;">
+        <h3 >All Tests of {{student.name}} </h3>
+    </caption>
+    <thead>
+        <tr>
+            <th scope="col" style="text-align: center;">Sr. No.</th>
+            <th scope="col" style="text-align: center;">Class</th>
+            <th scope="col" style="text-align: center;">Marked by</th>
+            <th scope="col" style="text-align: center;">Subject</th>
+            <th scope="col" style="text-align: center;">Obtained Marks</th>
+            <th scope="col" style="text-align: center;">Total Marks</th>
+            <th scope="col" style="text-align: center;">Percentage</th>
+            <th scope="col" style="text-align: center;">Remarks</th>
+            <th scope="col" style="text-align: center;">Test Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for test in tests %}
+        <tr>
+            <td class="align-middle" style="text-align: center;">{{forloop.counter}}</td>
+            <td class="align-middle" style="text-align: center;">{{test.test_id.standard}}</td>
+            <td class="align-middle" style="text-align: center;">{{test.test_id.teacher_id}}</td>
+            <td class="align-middle" style="text-align: center;">{{test.test_id.subject}}</td>
+            <td class="align-middle" style="text-align: center;">{{test.obtained_marks}}</td>
+            <td class="align-middle" style="text-align: center;">{{test.test_id.total_marks}} </td>
+            <td class="align-middle" style="text-align: center;">{{test.percentage|floatformat:"2"}}</td>
+            <td class="align-middle" style="text-align: center;">{{test.remarks}}</td>
+            <td class="align-middle" style="text-align: center;">{{test.test_id.date}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
