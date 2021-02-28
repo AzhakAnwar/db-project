@@ -4,7 +4,7 @@ from django.forms import ModelForm
 from .models import Parent, Student, Teacher
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext_lazy as _
-
+from phonenumber_field.formfields import PhoneNumberField
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
@@ -21,7 +21,7 @@ class StudentForm(ModelForm):
         widgets = {
             # 'name': forms.TextInput(attrs={'class': 'form-control'}),
             'parent_id': forms.Select(attrs={'class': 'form-control'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone': forms.NumberInput(attrs={'class': 'form-control'}),
             'standard': forms.NumberInput(attrs={'class': 'form-control'}),
         }
 
@@ -32,7 +32,7 @@ class ParentForm(ModelForm):
         fields = ('phone',)
         widgets = {
             # 'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone': forms.NumberInput(attrs={'class': 'form-control'}),
         }
 
 

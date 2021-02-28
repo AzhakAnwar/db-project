@@ -1,12 +1,13 @@
 from .customuser import CustomUser
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Parent(models.Model):
     name = models.CharField(verbose_name='Full Name', max_length=30)
     ssn = models.OneToOneField(to=CustomUser, on_delete=models.CASCADE,
                                verbose_name='Parent/Guardian ID', primary_key=True, to_field='id')
-    phone = models.CharField(max_length=12, verbose_name='Phone No.')
+    phone = PhoneNumberField(verbose_name='Phone No.', unique=True)
 
     def __str__(self):
         return self.name
@@ -16,7 +17,7 @@ class Teacher(models.Model):
     name = models.CharField(verbose_name='Full Name', max_length=30)
     ssn = models.OneToOneField(to=CustomUser, on_delete=models.CASCADE,
                                verbose_name='Teacher ID', primary_key=True, to_field='id')
-    phone = models.CharField(max_length=12, verbose_name='Phone No.')
+    phone = PhoneNumberField(verbose_name='Phone No.', unique=True)
 
     def __str__(self):
         return self.name
@@ -29,8 +30,7 @@ class Student(models.Model):
     ssn = models.OneToOneField(to=CustomUser, on_delete=models.CASCADE,
                                primary_key=True, verbose_name='Student ID', to_field='id')
     standard = models.IntegerField(verbose_name='Class')
-    phone = models.CharField(
-        max_length=12, verbose_name='Phone No.', blank=True)
+    phone = PhoneNumberField(blank=True, verbose_name='Phone No.', unique=True)
 
     def __str__(self):
         return self.name

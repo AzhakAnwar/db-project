@@ -1,3 +1,4 @@
+from django.db.models.query import FlatValuesListIterable
 from django.shortcuts import render, redirect
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
@@ -18,6 +19,22 @@ def signupuser(request):
     else:
         print(request.POST)
         if request.POST['password1'] == request.POST['password2']:
+            person = StudentForm(request.POST)
+            if person.is_valid():
+                add_person = person.save(commit=False)
+                student = True
+                parent = False
+            else:
+                person = ParentForm(request.POST)
+                if person.is_valid():
+                    add_person = person.save(commit=False)
+                    student = False
+                    parent = True
+                else:
+                    return render(request, 'signupuser.html',
+                                  {'studentform': StudentForm(),
+                                   'parentform': ParentForm(),
+                                   'error': 'Invalid form submission. Try Again.'})
             try:
                 user = CustomUser.objects.create_user(
                     username=request.POST['username'],
@@ -25,28 +42,24 @@ def signupuser(request):
                     first_name=request.POST['first_name'],
                     last_name=request.POST['last_name'])
 
-                person = StudentForm(request.POST)
-                if person.is_valid():
-                    add_person = person.save(commit=False)
+                if student:
                     add_person.name = user.get_full_name().title()
                     add_person.ssn = user
                     add_person.save()
                     user.user_type = 1  # Student
                     user.save()
+                elif parent:
+                    add_person.name = user.get_full_name().title()
+                    add_person.ssn = user
+                    add_person.save()
+                    user.user_type = 2  # Parent
+                    user.save()
                 else:
-                    person = ParentForm(request.POST)
-                    if person.is_valid():
-                        add_person = person.save(commit=False)
-                        add_person.name = user.get_full_name().title()
-                        add_person.ssn = user
-                        add_person.save()
-                        user.user_type = 2  # Parent
-                        user.save()
-                    else:
-                        return render(request, 'signupuser.html',
-                                      {'studentform': StudentForm(),
-                                       'parentform': ParentForm(),
-                                       'error': 'Invalid form submission. Try Again.'})
+                    return render(request, 'signupuser.html',
+                                  {'studentform': StudentForm(),
+                                   'parentform': ParentForm(),
+                                   'error': 'Invalid form submission. Try Again.'})
+
                 login(request, user)
                 return redirect('home')
             except IntegrityError:
