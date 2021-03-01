@@ -12,7 +12,7 @@
         {% if student.phone %}
         <tr>
             <td><h6>Student's Phone No:</h6></td>
-            <td><h6>{{student.phone}}</h6></td>
+            <td><h6>{{student.phone|phonenumber}}</h6></td>
         </tr>
         {% endif %}
         <tr>
