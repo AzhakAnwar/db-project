@@ -1,5 +1,5 @@
 # TEACHER PARENT INTERACTIVE LMS
-This repository does not contain any migration and database file. 
+This repository does not contain any migration and database file.\
 In order to run this project, first make migrations, then create a superuser.
 
 Requirements:\
