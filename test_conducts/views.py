@@ -1,3 +1,4 @@
+from os import pipe
 from test_conducts.forms import TestForm
 from django.shortcuts import get_list_or_404, redirect, render
 from .models import Conduct, StudentTests
@@ -38,13 +39,13 @@ def tests(request):
 @login_required
 def s_tests(request, s_id):
     all_records = Conduct.objects.select_related('test_id').order_by('test_id')
-    if request.user.user_type == 3:
+    if request.user.user_type == 3:     # teacher
         records = get_list_or_404(all_records, Q(
             test_id__teacher_id=request.user.id), student_id=s_id)
-    elif request.user.user_type == 2:
+    elif request.user.user_type == 2:   # parent
         records = get_list_or_404(all_records, Q(
             student_id__parent_id=request.user.id), student_id=s_id)
-    else:
+    else:                               # student
         records = get_list_or_404(all_records, Q(
             student_id=request.user.id), student_id=s_id)
     total_percentage = 0.0

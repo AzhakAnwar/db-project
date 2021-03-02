@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load format_phone %}
 {% block content %}
 
 <table class="table table-borderless table-sm" style="width:max-content; align-items: center;">
@@ -12,7 +12,7 @@
         {% if student.phone %}
         <tr>
             <td><h6>Student's Phone No:</h6></td>
-            <td><h6>{{student.phone|phonenumber}}</h6></td>
+            <td><h6>{{student.phone|format_phone}}</h6></td>
         </tr>
         {% endif %}
         <tr>
@@ -21,7 +21,7 @@
         </tr>
         <tr>
             <td><h6>Guardian's Phone No:</h6></td>
-            <td><h6>{{student.parent_id.phone}}</h6></td>
+            <td><h6>{{student.parent_id.phone|format_phone}}</h6></td>
         </tr>
         <tr>
             <td><h6>Class:</h6></td>
