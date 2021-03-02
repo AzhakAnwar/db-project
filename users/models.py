@@ -30,7 +30,7 @@ class Student(models.Model):
     ssn = models.OneToOneField(to=CustomUser, on_delete=models.CASCADE,
                                primary_key=True, verbose_name='Student ID', to_field='id')
     standard = models.IntegerField(verbose_name='Class')
-    phone = PhoneNumberField(blank=True, verbose_name='Phone No.', unique=True)
+    phone = PhoneNumberField(blank=True, verbose_name='Phone No.')
 
     def __str__(self):
         return self.name
