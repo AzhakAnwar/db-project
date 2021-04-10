@@ -3,23 +3,23 @@
 2. Install the packages from requirement file
 
 ## Superuser ##
-username: admin
+username: admin\
 password: db_project
 
 ## Students ##
-username: zubair
+username: zubair\
 password: test
 
-username: azhak
+username: azhak\
 password: test
 
 ## Teacher ##
-username: umer
+username: umer\
 password: test
 
-username: asim_loan
+username: asim_loan\
 password: test
 
 ## Parent ##
-username: anwar
+username: anwar\
 password: test
