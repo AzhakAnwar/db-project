@@ -4,22 +4,22 @@
 
 ## Superuser ##
 username: admin\
-password: db_project\
+password: db_project
 
 ## Students ##
 username: zubair\
-password: test\
+password: test
 
 username: azhak\
-password: test\
+password: test
 
 ## Teacher ##
 username: umer\
-password: test\
+password: test
 
 username: asim_loan\
-password: test\
+password: test
 
 ## Parent ##
 username: anwar\
-password: test\
+password: test
