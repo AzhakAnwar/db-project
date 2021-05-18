@@ -2,9 +2,6 @@
 1. Clone the repo
 2. Install the packages from requirement file
 
-## Superuser ##
-username: admin\
-password: db_project
 
 ## Students ##
 username: zubair\
