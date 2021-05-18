@@ -8,3 +8,6 @@ eval/
 *.vsdx
 *.docx
 *.pdf
+*.sqlite3
+migrations/
+
